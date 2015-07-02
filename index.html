@@ -4,9 +4,27 @@
     <meta charset="utf-8">
     <title>BlackJack</title>
   </head>
-  <body>
-    <h1>Alls Workin</h1>
+  <body ng-controller="blackjack">
+    <h1 >Draw Cards Here.</h1>
+    <button ng-click="draw()">Draw!</button>
+
+    <h2>Your cards are...{{game.player}}</h2>
+    <h3>Which adds up to {{game.handVal(game.player)}}</h3>
+    <span>
+      <button ng-click="hit()">Hit!</button>
+    </span>
+    <span>
+      <button ng-click="stay()">Stay!</button>
+    </span>
+    <div>
+      <h2>The computer's hand is {{game.computer}}</h2>
+      <h3>Which adds up to {{game.handVal(game.computer)}}</h3>
+    </div>
+    <div>
+      <h1 class="strong">{{game.winner}}</h1>
+    </div>
     <script src="node_modules/angular/angular.js"></script>
+    <script src="game.js"></script>
     <script src="index.js"></script>
   </body>
 </html>
