@@ -7,8 +7,8 @@
   <body ng-controller="blackjack">
     <h1 >Draw Cards Here.</h1>
     <button ng-click="draw()">Draw!</button>
-
-    <h2>Your cards are...{{game.player}}</h2>
+    <h2>Your cards are...</h2>
+    <card ng-repeat="card in game.player" val="{{card}}"></card>
     <h3>Which adds up to {{game.handVal(game.player)}}</h3>
     <span>
       <button ng-click="hit()">Hit!</button>
@@ -18,7 +18,16 @@
     </span>
     <div>
       <h2>The computer's hand is {{game.computer}}</h2>
+      <card ng-repeat="card in game.computer" val={{card}}></card>
       <h3>Which adds up to {{game.handVal(game.computer)}}</h3>
+
+      <input ng-model="foo"></input>
+      <div>{{foo}}</div>
+      <card val="S4"></card>
+      <card val="DQ"></card>
+
+      <card val="H3"></card>
+      <card val="C5"></card>
     </div>
     <div>
       <h1 class="strong">{{game.winner}}</h1>
