@@ -4,7 +4,7 @@ console.log("I am the captian of jS");
   "use strict";
   var cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'];
   var suits = ["C", "H", "D", "S"];
-
+  var computerShouldDraw = false;
 
   function Game(){
     var deck = [];
@@ -15,6 +15,7 @@ console.log("I am the captian of jS");
       }
     }
     this.deck = deck;
+    this.cards = cards;
     this.computer = [];
     this.player = [];
   }
@@ -23,8 +24,13 @@ console.log("I am the captian of jS");
     var deck = this.deck;
     var index = Math.floor(Math.random() * deck.length);
     var card = deck[index];
-    deck.splice(index, 1);
-    return card;
+    if (deck.length === 0){
+      this.deckLength = "Out of cards. Refresh the page to reshuffle :)";
+
+    }else{
+      deck.splice(index, 1);
+      return card;
+    }
   };
 
   Game.prototype.firstDraw = function firstDraw(){
@@ -59,7 +65,7 @@ console.log("I am the captian of jS");
 
   Game.prototype.houselogic = function houselogic(comp) {
     while (this.handVal(comp) < 17){
-      setTimeout(this.hit(comp), 2000);
+      this.hit(comp);
     }
   };
 
@@ -67,9 +73,9 @@ console.log("I am the captian of jS");
     this.houselogic(this.computer);
     var playerVal = this.handVal(this.player);
     var computerVal = this.handVal(this.computer);
-    if (playerVal > 21 || computerVal > playerVal && computerVal <= 21){
+    if (playerVal > 21 || computerVal > playerVal && computerVal <= 21) {
       this.winner = "House Wins!";
-    }else if (computerVal > 21 || playerVal > computerVal){
+    } else if (computerVal > 21 || playerVal > computerVal) {
       this.winner = "You Win!";
     } else {
       this.winner = "$$ PUSH $$";
@@ -77,6 +83,7 @@ console.log("I am the captian of jS");
   };
 
   Game.prototype.stay = function stay(){
+    computerShouldDraw = true;
     this.finish();
   };
 

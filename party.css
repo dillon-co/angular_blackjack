@@ -1,0 +1,15 @@
+.card{
+  display: inline-block;
+  margin-left: 20px;
+  height: 100px;
+  width: 50px;
+  border: solid 1px black;
+  padding: 5px 5px;
+  border-radius: 3px;
+  background-color: #C3D4CE;
+  font-size: 20px;
+}
+
+body{
+  background-color: #00572C;
+}

@@ -5,6 +5,7 @@
 
   function blackjackController($scope, Game){
     var g = new Game();
+    $scope.deck = g.deck;
     $scope.draw = function(){
       g.firstDraw();
     };
@@ -12,7 +13,14 @@
       g.hit(g.player);
     };
     $scope.stay = function(){
-      g.stay();
+      g.stay(g.computer);
+      g.computer.forEach(function(card){
+        $scope.deck.push(card);
+      });
+      g.player.forEach(function(card){
+        $scope.deck.push(card);
+      });
+
     };
     $scope.game = g;
   }
@@ -25,8 +33,8 @@
         card: '@val'
       },
       restrict: 'E',
-      template: "<div class='card' ng-click='hit()'>{{card[1]}} <span ng-bind-html='symbol'></span></div>",
-      link: function link(scope, element, attr){
+      template: "<div class='card' ng-click='hit()'>{{card[1]}}{{card[2]}} <span ng-bind-html='symbol'> </span></div>",
+      link: function link(scope, element){
         // debugger;
         scope.suit = scope.card[0];
         if(scope.suit === 'H'){
