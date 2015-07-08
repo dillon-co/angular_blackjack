@@ -2,6 +2,7 @@
   "use strict";
   var cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'];
   var suits = ["C", "H", "D", "S"];
+  var winner;
 
   function Game(){
     var deck = [];
@@ -85,13 +86,13 @@
         } else if (result2.lenghth === 0){
           console.log("That's a three of a kind!");
         }
-    } else if (result1.length === 2) {
+    }else if (result1.length === 2){
         if (result2.length === 1){
           console.log("3 of a kind!");
         } else if (result2.length === 0){
           console.log("Two Pair!");
         }
-    } else if (result1.length === 1){
+    }else if (result1.length === 1){
       console.log("Pair of "+result1[0]+"'s");
     }
   };
@@ -117,19 +118,13 @@
 
   Game.prototype.straight = function straight(player){
     var numbered_arr = [];
-    var sequenced_arr = [];
     this.getNumbers(player, numbered_arr);
     var sorted_arr = numbered_arr.sort();
-    for (var i = 0; i < player.length; i++){
-      if(i === 0 && sorted_arr[i] === sorted_arr[i+1]-1){
-          sequenced_arr.push(sorted_arr[i]);
-      } else if (sorted_arr[i] === sorted_arr[i+1]-1 && sorted_arr[i] === sorted_arr[i-1]+1){
-        sequenced_arr.push(sorted_arr[i]);
-      } else if (i === sorted_arr.length-1 && sorted_arr[i] === sorted_arr[i-1]+1){
-        sequenced_arr.push(sorted_arr[i]);
-      }
-    }
-    if (sequenced_arr.length === sorted_arr.length){
+    var reducedVal = sorted_arr.reduce(function(total, current){
+      return total + current;
+    }, 0);
+    var straightVal = sorted_arr[0]+(sorted_arr[0]+1)+(sorted_arr[0]+2)+(sorted_arr[0]+3)+(sorted_arr[0]+4);
+    if (reducedVal === straightVal){
       console.log("That's a straight!");
       return true;
     }
@@ -157,21 +152,43 @@
     var royalty = 0;
     this.getNumbers(player, result1);
     result1.sort();
-    royalty = result1.reduce(function(prev, curr){ return prev + curr }, 0);
+    royalty = result1.reduce(function(prev, curr){
+      return prev + curr;
+      }, 0);
     console.log(result1);
     if (royalty === 60 && this.flush(player)){
-      console.log("$$$$$$$$ HOLY MOTHER OF MAYHEM YOU JUST GOT A ROYAL FLUSH!!!! $$$$$$$");
+      console.log("$$$$$$$ HOLY MOTHER OF MAYHEM YOU JUST GOT A ROYAL FLUSH!!!! $$$$$$$");
     }
+  };
+
+  Game.prototype.compareHands = function compareHands(player, computer){
+    this.firstDraw();
+    console.log(g.player)
+    this.matches(computer);
+    this.matches(player);
+    this.highCard(player, computer);
+    // this.straight(computer);
+    // this.straight(player);
+    // this.flush(computer);
+    // this.flush(player);
+    this.straightFlush(computer);
+    this.straightFlush(player);
+    this.royalFlush(computer);
+    this.royalFlush(player);
   };
 
   var g = new Game();
   // console.log(Game.deck)
-  g.firstDraw();
+  // g.firstDraw();
   // g.matches(g.computer);
   // g.matches(g.player);
   // g.highCard(g.player, g.computer);
   // g.straight(g.computer);
   // g.flush(g.computer);
-  g.straightFlush(g.computer);
-  g.royalFlush(g.computer)
+  // g.straightFlush(g.computer);
+  // g.royalFlush(g.computer);
+  console.log("Player: ");
+  g.compareHands(g.player, g.computer);
+  console.log("\n\n\nComputer: ");
+  g.compareHands(g.computer, g.player);
 }());

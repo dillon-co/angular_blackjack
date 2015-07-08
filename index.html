@@ -5,7 +5,8 @@
     <title>BlackJack</title>
     <link href="party.css" rel="stylesheet">
   </head>
-  <body ng-controller="blackjack">
+  <body>
+  <div ng-controller="blackjack">
     <h1 >Draw Cards Here.</h1>
     <h3>{{game.deck.length}} cards in deck.</h3>
     <button ng-click="draw()">Draw!</button>
@@ -29,6 +30,11 @@
     </div>
     <script src="node_modules/angular/angular.js"></script>
     <script src="blackjack.js"></script>
+    <script src="five_card.js"></script>
     <script src="index.js"></script>
+  </div>
+
+  <div ng-controller="">
+
   </body>
 </html>

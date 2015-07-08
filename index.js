@@ -56,4 +56,17 @@
   app.directive('card', cardDirective);
 
   angular.bootstrap(document.body, ["app"], {strictDi: true});
+
+  function fiveCardController($scope, Game){
+    var g = new Game();
+    $scope.draw = function(){
+      g.firstDraw();
+    };
+    $scope.finish = function(){
+      g.compareHands(g.player, g.computer);
+    };
+  }
+
+  fiveCardController.$inject = ["$scope", "Game"];
+  app.controller("fiveCard", fiveCardController);
 }());
