@@ -17,8 +17,8 @@
     this.cards = cards;
     this.computer = [];
     this.player = [];
-    // this.computerValue = {0};
-    // this.playerValue = {0};
+    this.winningVal;
+
   }
 
   Game.prototype.draw = function draw(){
@@ -209,6 +209,14 @@
     console.log(value);
   };
 
+  Game.prototype.getWinner = function(){
+    if (computerVal.a > playerVal.a){
+      this.winningVal = "The house has won!";
+    } else if(playerVal.a > computerVal.a){
+      this.winningVal = "You beat the house!!";
+    }
+  };
+
   var g = new Game();
   console.log(computerVal.a);
   console.log(playerVal.a);
@@ -219,4 +227,7 @@
 
   console.log("\n\n\nComputer: "+g.computer);
   g.compareHands(g.computer, g.player, computerVal);
+  g.getWinner();
+
+  console.log("\n\n\n\n\n"+g.winningVal);
 }());
