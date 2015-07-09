@@ -59,6 +59,7 @@
 
   function fiveCardController($scope, Game){
     var g = new Game();
+    $scope.deck = g.deck;
     $scope.draw = function(){
       g.firstDraw();
     };
