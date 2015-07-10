@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var app = angular.module("app", ["game"]);
+  var app = angular.module("app", ["game", "game2"]);
 
 
   function blackjackController($scope, Game){
@@ -20,12 +20,29 @@
       g.player.forEach(function(card){
         $scope.deck.push(card);
       });
-
     };
     $scope.game = g;
   }
   blackjackController.$inject = ["$scope", "Game"];
   app.controller("blackjack", blackjackController);
+
+  function fivecardController($scope, Game2){
+    var g = new Game2();
+    $scope.deck = g.deck;
+    $scope.draw = function(){
+      g.fDraw();
+    };
+    $scope.playerfinish = function(){
+      g.compareHands();
+    };
+    $scope.computerfinish = function(){
+      g.compareHands();
+    };
+    $scope.game = g;
+  }
+
+  fivecardController.$inject = ["$scope", "Game2"];
+  app.controller("fivecard", fivecardController);
 
   function cardDirective($sce) {
     return {
@@ -57,17 +74,4 @@
 
   angular.bootstrap(document.body, ["app"], {strictDi: true});
 
-  function fiveCardController($scope, Game){
-    var g = new Game();
-    $scope.deck = g.deck;
-    $scope.draw = function(){
-      g.firstDraw();
-    };
-    $scope.finish = function(){
-      g.compareHands(g.player, g.computer);
-    };
-  }
-
-  fiveCardController.$inject = ["$scope", "Game"];
-  app.controller("fiveCard", fiveCardController);
 }());

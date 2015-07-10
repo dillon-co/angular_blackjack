@@ -28,13 +28,34 @@
     <div>
       <h1 class="strong">{{game.winner}}</h1>
     </div>
-    <script src="node_modules/angular/angular.js"></script>
-    <script src="blackjack.js"></script>
-    <script src="five_card.js"></script>
-    <script src="index.js"></script>
   </div>
 
-  <div ng-controller="">
+  <div ng-controller="fivecard">
+    <br/><hr/><br/>
+    <h1>Five Card Draw!</h1>
+      <button ng-click="draw()">Draw!</button><br/><br/>
+      <h2>Your hand</h2>
+      <card ng-repeat="card in game.player" val="{{card}}"></card>
+      <br/><br/>
+      <button ng-click="playerfinish(game.player, game.computer, game.playerVal)">
+        Compare your cards
+      </button>
 
+      <h2>House's Hand</h2>
+      <card ng-repeat="card in game.computer" val={{card}}></card>
+      <br/><br/>
+
+      <div>
+        <button ng-click="computerfinish(game.computer, game.player, game.computerVal)">
+          Compare House cards
+        </button>
+        <button ng-click="game.getWinner()">Who Won?</button>
+        <h2>{{game.winningVal}}</h2>
+      </div>
+  </div>
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="five_card.js"></script>
+    <script src="blackjack.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>

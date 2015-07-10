@@ -5,7 +5,7 @@
   var playerVal = { a: 0 };
   var computerVal = { a: 0 };
 
-  function Game(){
+  function Game2(){
     var deck = [];
     for(var card = 0; card < cards.length; card++) {
         for (var suit = 0; suit < suits.length; suit++ ){
@@ -17,11 +17,11 @@
     this.cards = cards;
     this.computer = [];
     this.player = [];
-    this.winningVal;
+    // this.winningVal;
 
   }
 
-  Game.prototype.draw = function draw(){
+  Game2.prototype.draw = function draw(){
     var deck = this.deck;
     var index = Math.floor(Math.random() * deck.length);
     var card = deck[index];
@@ -32,8 +32,12 @@
       return card;
     }
   };
+  Game2.prototype.fDraw = function fDraw(){
+    this.computer = [this.draw(), this.draw(), this.draw(), this.draw(), this.draw()];
+    this.player = [this.draw(), this.draw(), this.draw(), this.draw(), this.draw()];
+  };
 
-  Game.prototype.cardVal = function cardVal(card){
+  Game2.prototype.cardVal = function cardVal(card){
     // var card_arr = card.substr(1);
     if(card === 'A'){
       return 14;
@@ -48,7 +52,7 @@
     }
   };
 
-  Game.prototype.compare = function compare(a, b){
+  Game2.prototype.compare = function compare(a, b){
     var aVal = this.cardVal(a.substr(1,2));
     var bVal = this.cardVal(b.substr(1,2));
     if (aVal > bVal){
@@ -60,20 +64,20 @@
     }
   };
 
-  Game.prototype.getNumbers = function getNumbers(player, results){
+  Game2.prototype.getNumbers = function getNumbers(player, results){
     player.forEach(function(card){
       results.push(g.cardVal(card.substr(1,2)));
     });
     return results;
   };
 
- Game.prototype.getSuits = function getSuits(player, results){
+ Game2.prototype.getSuits = function getSuits(player, results){
      for (var i=0; i<player.length; i++){
        results.push(player[i].charAt(0));
      }
  };
 
-  Game.prototype.checkMatches = function checkMatches(arr, results){
+  Game2.prototype.checkMatches = function checkMatches(arr, results){
     var sorted_arr = arr.sort(this.compare.bind(this));
     for (var i = 0; i < arr.length - 1; i++){
       if (sorted_arr[i + 1][1] === sorted_arr[i][1]) {
@@ -82,22 +86,17 @@
     }
   };
 
-  Game.prototype.checkSuitMatches = function checkSuitMatches(arr, results){
+  Game2.prototype.checkSuitMatches = function checkSuitMatches(arr, results){
     var sorted_arr = arr.sort();
     for (var i = 0; i < arr.length - 1; i++){
-      console.log("meow");
       if (sorted_arr[i + 1] === sorted_arr[i]) {
         results.push(sorted_arr[i]);
       }
     }
   };
 
-  Game.prototype.firstDraw = function firstDraw(){
-    this.computer = ["H2", "HK", "H4", "HJ", "H10"];
-    this.player = [this.draw(), this.draw(), this.draw(), this.draw(), this.draw()];
-  };
 
-  Game.prototype.matches = function matches(person, value){
+  Game2.prototype.matches = function matches(person, value){
     var result1 = [];
     var result2 = [];
     this.checkMatches(person, result1);
@@ -126,7 +125,7 @@
   };
 
 
-  Game.prototype.highCard = function highCard(player1, player2, value){
+  Game2.prototype.highCard = function highCard(player1, player2, value){
       var playerResults = [];
       var playerHigh = 0;
       var computerResults = [];
@@ -145,7 +144,7 @@
       value.a = 1;
   };
 
-  Game.prototype.straight = function straight(player, value){
+  Game2.prototype.straight = function straight(player, value){
     var numbered_arr = [];
     this.getNumbers(player, numbered_arr);
     var sorted_arr = numbered_arr.sort();
@@ -160,7 +159,7 @@
     }
   };
 
-  Game.prototype.flush = function flush(player, value){
+  Game2.prototype.flush = function flush(player, value){
     var results = [];
     var matchResult = [];
     this.getSuits(player, results);
@@ -172,14 +171,14 @@
     }
   };
 
-  Game.prototype.straightFlush = function straightflush(player, value){
+  Game2.prototype.straightFlush = function straightflush(player, value){
     if( this.straight(player, value) && this.flush(player, value) ) {
       this.winner = "Straight Flush!";
       value.a = 9;
     }
   };
 
-  Game.prototype.royalFlush = function royalFlush(player, value){
+  Game2.prototype.royalFlush = function royalFlush(player, value){
     var result1 = [];
     var royalty = 0;
     this.getNumbers(player, result1);
@@ -194,9 +193,10 @@
     }
   };
 
-  Game.prototype.compareHands = function compareHands(player, computer, value){
-    // this.firstDraw();
+  Game2.prototype.compareHands = function compareHands(player, computer, value){
+    // this.fDraw();
     // console.log(g.player);
+    value.a = 0;
     this.highCard(player, computer, value);
     this.matches(player, value);
     this.straight(player, value);
@@ -204,12 +204,12 @@
     console.log(value.a);
     this.straightFlush(player, value);
     this.royalFlush(player, value);
-    value = value.a;
-    console.log(this.winner);
-    console.log(value);
+    // value = value.a;
+    // console.log(this.winner);
+    // console.log(value);
   };
 
-  Game.prototype.getWinner = function(){
+  Game2.prototype.getWinner = function(){
     if (computerVal.a > playerVal.a){
       this.winningVal = "The house has won!";
     } else if(playerVal.a > computerVal.a){
@@ -217,17 +217,22 @@
     }
   };
 
-  var g = new Game();
-  console.log(computerVal.a);
-  console.log(playerVal.a);
-  g.firstDraw();
-  console.log("Player: "+g.player);
+  var g = new Game2();
+  
+  var app = angular.module("game2", []);
+  app.service("Game2", function(){
+    return Game2
+  });
+  // console.log(computerVal.a);
+  // console.log(playerVal.a);
+  // g.fDraw();
+  // console.log("Player: "+g.player);
 
-  g.compareHands(g.player, g.computer, playerVal);
+  // g.compareHands(g.player, g.computer, playerVal);
 
-  console.log("\n\n\nComputer: "+g.computer);
-  g.compareHands(g.computer, g.player, computerVal);
-  g.getWinner();
+  // console.log("\n\n\nComputer: "+g.computer);
+  // g.compareHands(g.computer, g.player, computerVal);
+  // g.getWinner();
 
-  console.log("\n\n\n\n\n"+g.winningVal);
+  // console.log("\n\n\n\n\n"+g.winningVal);
 }());

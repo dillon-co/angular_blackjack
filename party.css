@@ -6,6 +6,7 @@
   border: solid 1px black;
   padding: 5px 5px;
   border-radius: 3px;
+  border-width: 6.5px; 
   background-color: #C3D4CE;
   font-size: 20px;
 }
