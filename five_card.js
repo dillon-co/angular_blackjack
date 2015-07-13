@@ -2,8 +2,6 @@
   "use strict";
   var cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'];
   var suits = ["C", "H", "D", "S"];
-  var playerVal = { a: 0 };
-  var computerVal = { a: 0 };
 
   function Game2(){
     var deck = [];
@@ -17,6 +15,8 @@
     this.cards = cards;
     this.computer = [];
     this.player = [];
+    this.playerVal = { a: 0 };
+    this.computerVal = { a: 0 };
     // this.winningVal;
 
   }
@@ -209,30 +209,34 @@
     // console.log(value);
   };
 
-  Game2.prototype.getWinner = function(){
-    if (computerVal.a > playerVal.a){
+  Game2.prototype.getWinner = function(valueA, valueB){
+    if ( valueA < valueB ){
       this.winningVal = "The house has won!";
-    } else if(playerVal.a > computerVal.a){
+    } else if( valueB < valueA ){
       this.winningVal = "You beat the house!!";
+    } else {
+      this.winningVal = "It's a draw!"
     }
   };
 
   var g = new Game2();
-  
+
   var app = angular.module("game2", []);
   app.service("Game2", function(){
-    return Game2
+    return Game2;
   });
+
+
   // console.log(computerVal.a);
   // console.log(playerVal.a);
   // g.fDraw();
   // console.log("Player: "+g.player);
-
+  //
   // g.compareHands(g.player, g.computer, playerVal);
-
+  //
   // console.log("\n\n\nComputer: "+g.computer);
   // g.compareHands(g.computer, g.player, computerVal);
   // g.getWinner();
-
+  //
   // console.log("\n\n\n\n\n"+g.winningVal);
 }());

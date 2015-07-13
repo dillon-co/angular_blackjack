@@ -33,12 +33,19 @@
       g.fDraw();
     };
     $scope.playerfinish = function(){
-      g.compareHands();
+      g.compareHands(g.player, g.computer, g.playerVal);
     };
     $scope.computerfinish = function(){
-      g.compareHands();
+      g.compareHands(g.computer, g.player, g.computerVal);
     };
+    $scope.getWinner = function(){
+      g.compareHands(g.player, g.computer, g.playerVal);
+      g.compareHands(g.computer, g.player, g.computerVal);
+      g.getWinner(g.playerVal.a, g.computerVal.a)
+    }
+    $scope.winningVal = g.winningVal
     $scope.game = g;
+
   }
 
   fivecardController.$inject = ["$scope", "Game2"];

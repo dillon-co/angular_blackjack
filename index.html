@@ -37,8 +37,10 @@
       <h2>Your hand</h2>
       <card ng-repeat="card in game.player" val="{{card}}"></card>
       <br/><br/>
-      <button ng-click="playerfinish(game.player, game.computer, game.playerVal)">
-        Compare your cards
+        <h1>{{game.winner}}</h1>
+      <br/><br/>
+      <button ng-click="playerfinish()">
+        What did you have?
       </button>
 
       <h2>House's Hand</h2>
@@ -46,10 +48,10 @@
       <br/><br/>
 
       <div>
-        <button ng-click="computerfinish(game.computer, game.player, game.computerVal)">
-          Compare House cards
+        <button ng-click="computerfinish()">
+          What did the house have?
         </button>
-        <button ng-click="game.getWinner()">Who Won?</button>
+        <button ng-click="getWinner()">Who Won?</button>
         <h2>{{game.winningVal}}</h2>
       </div>
   </div>
